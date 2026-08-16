@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GATE MATRIX ECE | Modular Academic Workspace</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#090A0F',
+                            900: '#10121A',
+                            800: '#181B26',
+                            700: '#222636'
+                        },
+                        amber: {
+                            400: '#FFB800',
+                            500: '#FF9100',
+                            600: '#FF6D00'
+                        },
+                        cyan: {
+                            400: '#00E5FF',
+                            500: '#00B8D4'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(24, 27, 38, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 145, 0, 0.25);
+        }
+        .circuit-bg {
+            background-color: #090A0F;
+            background-image: radial-gradient(rgba(255, 145, 0, 0.12) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+        /* Light mode professional high contrast styling with pure black letters */
+        .light-mode .circuit-bg {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(rgba(217, 119, 6, 0.18) 1px, transparent 0);
+        }
+        .light-mode .glass-panel {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(217, 119, 6, 0.35);
+            color: #000000 !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+        }
+        .light-mode body {
+            background-color: #f1f5f9;
+            color: #000000 !important;
+        }
+        .light-mode header {
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            border-color: #cbd5e1 !important;
+            color: #000000 !important;
+        }
+        .light-mode .bg-dark-950 { background-color: #f1f5f9 !important; color: #000000 !important; }
+        .light-mode .bg-dark-900, .light-mode [class*="bg-dark-900"] {
+            background-color: #e2e8f0 !important;
+            color: #000000 !important;
+        }
+        .light-mode .bg-dark-800, .light-mode [class*="bg-dark-800"] {
+            background-color: #cbd5e1 !important;
+            color: #000000 !important;
+        }
+        .light-mode .bg-dark-700, .light-mode [class*="bg-dark-700"] {
+            background-color: #94a3b8 !important;
+            color: #000000 !important;
+        }
+        .light-mode input, .light-mode textarea {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border-color: #d97706 !important;
+        }
+        .light-mode input::placeholder, .light-mode textarea::placeholder {
+            color: #334155 !important;
+        }
+        .light-mode .text-gray-200, .light-mode .text-gray-300, .light-mode .text-gray-400 {
+            color: #000000 !important;
+        }
+        .light-mode .border-gray-800, .light-mode .border-gray-700 {
+            border-color: #cbd5e1 !important;
+        }
+        .light-mode .text-amber-400, .light-mode .text-amber-500, .light-mode .text-cyan-400 {
+            color: #78350f !important;
+        }
+        .light-mode span, .light-mode p, .light-mode h1, .light-mode h2, .light-mode h3, .light-mode h4, .light-mode label {
+            color: #000000;
+        }
+        /* In-place item highlight animation */
+        @keyframes pulse-highlight {
+            0% { box-shadow: 0 0 0 0 rgba(255, 145, 0, 0.8); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 145, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 145, 0, 0); }
+        }
+        .search-highlight-active {
+            border: 2px solid #FF9100 !important;
+            background-color: rgba(255, 145, 0, 0.18) !important;
+            animation: pulse-highlight 1.5s ease-out;
+        }
+        .light-mode .search-highlight-active {
+            border: 2px solid #d97706 !important;
+            background-color: rgba(255, 191, 0, 0.3) !important;
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-gray-200 circuit-bg min-h-screen font-sans selection:bg-amber-500 selection:text-black text-base overflow-x-hidden">
+
+    <!-- UNIVERSITY-STYLE NAVBAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-dark-950/95 backdrop-blur-md border-b border-amber-500/30 px-3 sm:px-6 lg:px-8 py-3.5 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+            
+            <!-- Left: Logo -->
+            <a href="#home" onclick="switchPage('home')" class="flex items-center gap-2.5 sm:gap-3.5 shrink-0 group">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-black font-mono font-black text-base sm:text-lg shadow-[0_0_25px_rgba(255,145,0,0.6)] group-hover:scale-105 transition-transform">
+                    GM
+                </div>
+                <div>
+                    <span class="font-mono font-bold tracking-wider block text-sm sm:text-lg leading-tight">GATE MATRIX <span class="text-amber-400 font-extrabold drop-shadow-[0_0_8px_rgba(255,184,0,0.5)]">ECE</span></span>
+                    <span class="text-[10px] sm:text-xs font-mono text-cyan-400 block tracking-widest leading-none mt-0.5">PREPARATION PORTAL</span>
+                </div>
+            </a>
+
+            <!-- Center / Left Links -->
+            <nav class="hidden lg:flex items-center gap-7 text-sm font-mono font-medium">
+                <button onclick="switchPage('home')" class="nav-btn hover:text-amber-400 transition-colors">Home</button>
+                <button onclick="switchPage('academics')" class="nav-btn hover:text-amber-400 transition-colors">Academics</button>
+                <button onclick="switchPage('admission')" class="nav-btn hover:text-amber-400 transition-colors">Admission / Pass</button>
+                <button onclick="switchPage('research')" class="nav-btn hover:text-amber-400 transition-colors">Research &amp; PYQs</button>
+                <button onclick="switchPage('timetable')" class="nav-btn hover:text-amber-400 transition-colors">Timetable</button>
+            </nav>
+
+            <!-- Right Section: Search, Theme Toggle & Status -->
+            <div class="flex items-center gap-2 sm:gap-3.5">
+                <!-- Interactive Expandable Search with Gmail-style Dropdown -->
+                <div class="relative flex items-center">
+                    <input type="text" id="nav-search-input" oninput="handleNavSearch(this.value)" onkeydown="handleNavSearchKey(event)" placeholder="Search workspace..." class="w-0 opacity-0 transition-all duration-300 ease-out bg-dark-900 border border-amber-500/60 rounded-full py-2 px-3 sm:px-4 text-xs sm:text-sm font-mono focus:outline-none focus:w-48 sm:focus:w-72 focus:opacity-100">
+                    <button onclick="toggleSearchBar()" class="p-2 sm:p-2.5 rounded-full bg-dark-800 border border-amber-500/40 hover:text-amber-400 transition-colors ml-1 shadow-sm" title="Search">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </button>
+                    <!-- Gmail-style Search Results Dropdown -->
+                    <div id="search-dropdown" class="hidden absolute right-0 top-12 w-72 sm:w-96 glass-panel border border-amber-500/60 rounded-2xl shadow-2xl p-3 sm:p-4 z-50 max-h-[460px] overflow-y-auto font-mono text-xs sm:text-sm space-y-3"></div>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" class="p-2 sm:p-2.5 rounded-full bg-dark-800 border border-amber-500/40 hover:text-amber-400 transition-colors shadow-sm" title="Toggle Light/Dark Mode">
+                    <i data-lucide="sun" id="theme-icon" class="w-4 h-4"></i>
+                </button>
+
+                <!-- Progress Pill -->
+                <div class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-dark-800 border border-amber-500/40 text-xs font-mono shadow-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_10px_rgba(255,184,0,0.8)]"></span>
+                    <span id="nav-overall-progress" class="text-amber-400 font-extrabold">0% DONE</span>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 sm:p-2.5 rounded-lg border border-amber-500/40 bg-dark-800 hover:text-amber-400">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-800 mt-3 pt-3 pb-2 px-2 flex flex-col gap-2 font-mono text-sm">
+            <button onclick="switchPage('home'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Home</button>
+            <button onclick="switchPage('academics'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Academics</button>
+            <button onclick="switchPage('admission'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Admission / Pass</button>
+            <button onclick="switchPage('research'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Research &amp; PYQs</button>
+            <button onclick="switchPage('timetable'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Timetable</button>
+        </div>
+    </header>
+
+    <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+    <main class="pt-28 sm:pt-32 pb-24 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- PAGE 1: HOME -->
+        <div id="page-home" class="space-y-12">
+            <div class="relative py-16 sm:py-24 px-4 sm:px-6 text-center glass-panel rounded-3xl border-amber-500/40 overflow-hidden shadow-2xl">
+                <div class="max-w-3xl mx-auto space-y-6 sm:space-y-7">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/50 text-amber-400 text-xs sm:text-sm font-mono uppercase tracking-wider font-bold">
+                        <i data-lucide="cpu" class="w-4 h-4"></i> GATE 2027 ECE Preparation Portal
+                    </div>
+                    <h1 class="text-3xl sm:text-6xl font-extrabold font-mono tracking-tight leading-tight">
+                        SILICON MEETS <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-cyan-400 drop-shadow-[0_0_20px_rgba(255,145,0,0.5)]">SIGNAL</span>
+                    </h1>
+                    <p class="text-sm sm:text-lg leading-relaxed opacity-90">
+                        Welcome to the official GATE ECE portal. Use the navigation bar above to switch seamlessly between Academics, Syllabus Tracking, Google Keep Notes, Research & PYQs, and your Custom Timetable Hub.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3 sm:gap-4 pt-4">
+                        <button onclick="switchPage('academics')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-black font-extrabold font-mono text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_30px_rgba(255,145,0,0.6)] hover:scale-105 transition-all">
+                            Explore Academics →
+                        </button>
+                        <button onclick="switchPage('research')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-dark-800 border border-cyan-400/60 text-cyan-400 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-cyan-400/10 transition-all font-bold">
+                            View Research &amp; PYQs Hub
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: ACADEMICS (SUBJECTS & SYLLABUS CHECKLIST) -->
+        <div id="page-academics" class="hidden space-y-10">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-amber-400 mb-2 uppercase tracking-widest font-bold">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> ACADEMIC CURRICULUM
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">GATE ECE MODULES &amp; SUBJECTS</h2>
+                <p class="text-xs sm:text-sm opacity-90">Track your syllabus mastery topic-by-topic. Add new subjects and custom topics dynamically.</p>
+            </div>
+
+            <!-- Global Progress Box -->
+            <div class="p-4 sm:p-5 rounded-2xl bg-dark-900 border border-amber-500/50 max-w-xl mx-auto font-mono text-xs sm:text-sm mb-8 shadow-xl">
+                <div class="flex justify-between items-center mb-2.5">
+                    <span class="font-bold">Total Completion:</span>
+                    <span id="page-progress-text" class="text-amber-400 font-extrabold">0 / 40 Topics (0%)</span>
+                </div>
+                <div class="w-full h-3 bg-dark-700 rounded-full overflow-hidden border border-gray-800">
+                    <div id="page-progress-bar" class="h-full bg-gradient-to-r from-amber-400 to-cyan-400 transition-all duration-500 shadow-[0_0_15px_rgba(255,184,0,0.8)]" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Add Subject Form -->
+            <div class="glass-panel p-4 sm:p-6 rounded-2xl max-w-2xl mx-auto mb-10 font-mono text-xs sm:text-sm border border-amber-500/50 shadow-2xl">
+                <h3 class="font-bold text-amber-400 mb-4 flex items-center gap-2 text-sm sm:text-base">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Add New Subject
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                    <input type="text" id="new-subj-title" placeholder="Title (e.g., 09. VLSI)" onkeydown="if(event.key==='Enter') addCustomSubject()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="text" id="new-subj-sub" placeholder="Subtitle (e.g., CMOS Design)" onkeydown="if(event.key==='Enter') addCustomSubject()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="text" id="new-subj-weight" placeholder="Weightage (e.g., 6-8 Marks)" onkeydown="if(event.key==='Enter') addCustomSubject()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                </div>
+                <button onclick="addCustomSubject()" class="w-full py-3 rounded-xl bg-amber-500 text-black font-extrabold uppercase tracking-wider hover:bg-amber-400 transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,145,0,0.4)] text-xs sm:text-sm">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add Subject to Curriculum
+                </button>
+            </div>
+
+            <!-- Grid of Subjects -->
+            <div id="academics-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
+
+        <!-- PAGE 3: ADMISSION / PASS (CUSTOM TO-DO LIST & GOOGLE KEEP NOTES) -->
+        <div id="page-admission" class="hidden space-y-10">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400 mb-2 uppercase tracking-widest font-bold">
+                    <i data-lucide="list-todo" class="w-4 h-4"></i> PERSONAL PREPARATION DESK
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">CUSTOM TO-DO LIST &amp; KEEP NOTES</h2>
+                <p class="text-xs sm:text-sm opacity-90">Manage your daily tasks and jot down quick concepts with Google Keep-style notes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Custom To-Do List -->
+                <div class="glass-panel p-5 sm:p-7 rounded-3xl border-amber-500/40 font-mono shadow-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-5 border-b border-gray-800 pb-3">
+                            <h3 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i> Custom Daily To-Do List
+                            </h3>
+                            <span id="todo-count" class="text-xs opacity-90 font-bold text-amber-400">0 Tasks Pending</span>
+                        </div>
+
+                        <div class="flex gap-3 mb-5">
+                            <input type="text" id="new-todo-input" placeholder="e.g., Solve 30 NAT questions on Op-Amps" onkeydown="if(event.key==='Enter') addCustomTodo()" class="flex-grow bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                            <button onclick="addCustomTodo()" class="px-5 sm:px-6 py-3 rounded-xl bg-amber-500 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-amber-400 transition-colors flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(255,145,0,0.4)]">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="todo-list-container" class="space-y-3 text-xs sm:text-sm max-h-72 overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Google Keep-Style Notes Module -->
+                <div class="glass-panel p-5 sm:p-7 rounded-3xl border-cyan-400/40 font-mono shadow-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-5 border-b border-gray-800 pb-3">
+                            <h3 class="text-base sm:text-lg font-bold text-cyan-400 flex items-center gap-2">
+                                <i data-lucide="sticky-note" class="w-5 h-5"></i> Keep Notes (Quick Jot)
+                            </h3>
+                            <span id="notes-count" class="text-xs opacity-90 font-bold text-cyan-400">0 Notes Saved</span>
+                        </div>
+
+                        <div class="bg-dark-900 p-4 rounded-2xl border border-gray-800 mb-5 space-y-3">
+                            <input type="text" id="keep-note-title" placeholder="Title..." onkeydown="if(event.key==='Enter') document.getElementById('keep-note-content').focus()" class="w-full bg-dark-800 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-cyan-400 font-bold">
+                            <textarea id="keep-note-content" placeholder="Take a note..." rows="3" class="w-full bg-dark-800 border border-gray-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-cyan-400 resize-none"></textarea>
+                            <button onclick="addKeepNote()" class="w-full py-2.5 rounded-xl bg-cyan-400 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-cyan-500 transition-colors flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Save Note
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="keep-notes-container" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: RESEARCH & PYQS (OFFICIAL GATE SYLLABUS, PYQS & YOUTUBE HUB) -->
+        <div id="page-research" class="hidden space-y-10">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-amber-400 mb-2 uppercase tracking-widest font-bold">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> OFFICIAL GATE 2027 RESOURCES &amp; TUTORIAL HUB
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">RESEARCH &amp; PREVIOUS YEAR QUESTIONS</h2>
+                <p class="text-xs sm:text-sm opacity-90">Access official GATE ECE syllabus, previous year question papers, and your custom educator channels.</p>
+            </div>
+
+            <!-- Official GATE Syllabus & PYQs Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-10">
+                <!-- Official Syllabus Card -->
+                <div class="glass-panel p-5 sm:p-7 rounded-3xl border-amber-500/50 font-mono flex flex-col justify-between shadow-2xl">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 uppercase font-extrabold">Official Guidelines</span>
+                            <i data-lucide="book" class="w-6 h-6 text-amber-400"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold mb-3 text-amber-400">GATE ECE Official Syllabus</h3>
+                        <p class="text-xs sm:text-sm opacity-90 mb-5">Download or review the comprehensive official syllabus for Electronics and Communication Engineering (ECE).</p>
+                    </div>
+                    <a href="https://gate2027.iitm.ac.in/" target="_blank" class="py-3 rounded-xl bg-amber-500 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-amber-400 transition-all text-center flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,145,0,0.5)]">
+                        <i data-lucide="external-link" class="w-4 h-4"></i> View Official GATE Portal ↗
+                    </a>
+                </div>
+
+                <!-- Official PYQs Card -->
+                <div class="glass-panel p-5 sm:p-7 rounded-3xl border-cyan-400/50 font-mono flex flex-col justify-between shadow-2xl">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-400 border border-cyan-400/40 uppercase font-extrabold">Question Papers</span>
+                            <i data-lucide="file-question" class="w-6 h-6 text-cyan-400"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold mb-3 text-cyan-400">GATE PYQs &amp; Answer Keys</h3>
+                        <p class="text-xs sm:text-sm opacity-90 mb-5">Access official previous year question papers (PYQs) and answer keys for rigorous exam preparation.</p>
+                    </div>
+                    <a href="https://drive.google.com/drive/folders/1xUn7rGTzKlfvJDoo4SzCRi8jRlBD63ud" target="_blank" class="py-3 rounded-xl bg-cyan-400 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-cyan-500 transition-all text-center flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,229,255,0.5)]">
+                        <i data-lucide="external-link" class="w-4 h-4"></i> Access Official PYQs ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- Add YouTube Video / Channel Form -->
+            <div class="max-w-3xl mx-auto glass-panel p-5 sm:p-7 rounded-3xl border-amber-500/50 font-mono mb-10 shadow-2xl">
+                <h3 class="text-sm sm:text-base font-bold text-amber-400 mb-4 flex items-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Add New YouTube Link or Channel
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
+                    <input type="text" id="yt-title" placeholder="Title (e.g. Oppenheim Lecture 3)" onkeydown="if(event.key==='Enter') addYouTubeLink()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="text" id="yt-subject" placeholder="Subject (e.g. Signals)" onkeydown="if(event.key==='Enter') addYouTubeLink()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="url" id="yt-url" placeholder="YouTube URL (https://youtube.com/...)" onkeydown="if(event.key==='Enter') addYouTubeLink()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                </div>
+                <button onclick="addYouTubeLink()" class="w-full py-3 rounded-xl bg-amber-500 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-amber-400 transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,145,0,0.5)]">
+                    <i data-lucide="youtube" class="w-4 h-4"></i> Save Tutorial to Hub
+                </button>
+            </div>
+
+            <!-- Display Container for User's Saved YouTube Tutorials -->
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-sm sm:text-base font-bold font-mono mb-5 text-amber-400">Your Saved YouTube Tutorials &amp; Playlists:</h3>
+                <div id="youtube-list-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 font-mono"></div>
+            </div>
+        </div>
+
+        <!-- PAGE 5: TIMETABLE (CUSTOM TIMETABLE BUILDER) -->
+        <div id="page-timetable" class="hidden space-y-10">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-amber-400 mb-2 uppercase tracking-widest font-bold">
+                    <i data-lucide="calendar" class="w-4 h-4"></i> CUSTOM STUDY ROUTINE
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">PREPARE YOUR OWN TIMETABLE</h2>
+                <p class="text-xs sm:text-sm opacity-90">Build, organize, and manage your daily study slots and revision blocks.</p>
+            </div>
+
+            <!-- Add Timetable Slot Form -->
+            <div class="max-w-3xl mx-auto glass-panel p-5 sm:p-7 rounded-3xl border-amber-500/50 font-mono mb-10 shadow-2xl">
+                <h3 class="text-sm sm:text-base font-bold text-amber-400 mb-4 flex items-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Add New Timetable Slot
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
+                    <input type="text" id="tt-time" placeholder="Time Slot (e.g., 06:00 AM - 09:00 AM)" onkeydown="if(event.key==='Enter') addTimetableSlot()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="text" id="tt-subject" placeholder="Activity / Subject (e.g., Hard Math & NAT)" onkeydown="if(event.key==='Enter') addTimetableSlot()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                    <input type="text" id="tt-day" placeholder="Day / Tag (e.g., Monday / Daily)" onkeydown="if(event.key==='Enter') addTimetableSlot()" class="bg-dark-900 border border-amber-500/40 rounded-xl px-4 py-2.5 text-xs sm:text-sm focus:outline-none focus:border-amber-400">
+                </div>
+                <button onclick="addTimetableSlot()" class="w-full py-3 rounded-xl bg-amber-500 text-black font-extrabold text-xs sm:text-sm uppercase hover:bg-amber-400 transition-colors flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,145,0,0.5)]">
+                    <i data-lucide="calendar" class="w-4 h-4"></i> Add to Timetable
+                </button>
+            </div>
+
+            <!-- Display Container for User's Timetable Slots -->
+            <div class="max-w-3xl mx-auto space-y-4 font-mono text-xs sm:text-sm">
+                <h3 class="text-sm sm:text-base font-bold mb-5 text-amber-400">Your Custom Timetable Routine:</h3>
+                <div id="timetable-list-container" class="space-y-4"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-amber-500/30 py-8 sm:py-10 px-4 text-center font-mono text-xs sm:text-sm opacity-95">
+        <p class="mb-1.5 font-bold text-amber-400">GATE MATRIX ECE • Modular Academic Workspace</p>
+        <p class="text-amber-400/90 font-semibold">Structured Navigation &amp; Custom Resource Hub.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        lucide.createIcons();
+
+        // Track active search query for in-place highlighting across modules
+        let currentSearchQuery = '';
+
+        // Dark / Light Mode Toggle
+        function toggleTheme() {
+            const htmlEl = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (htmlEl.classList.contains('light-mode')) {
+                htmlEl.classList.remove('light-mode');
+                localStorage.setItem('gate_ece_theme', 'dark');
+                if (themeIcon) themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                htmlEl.classList.add('light-mode');
+                localStorage.setItem('gate_ece_theme', 'light');
+                if (themeIcon) themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('gate_ece_theme') || 'dark';
+            const themeIcon = document.getElementById('theme-icon');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.add('light-mode');
+                if (themeIcon) themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                document.documentElement.classList.remove('light-mode');
+                if (themeIcon) themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        }
+
+        // Modular Page Switching
+        function switchPage(pageId) {
+            const pages = ['home', 'academics', 'admission', 'research', 'timetable'];
+            pages.forEach(p => {
+                const el = document.getElementById(`page-${p}`);
+                if (el) {
+                    if (p === pageId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            closeSearchDropdown();
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // Expandable Search
+        function toggleSearchBar() {
+            const input = document.getElementById('nav-search-input');
+            if (input.classList.contains('w-0')) {
+                input.classList.remove('w-0', 'opacity-0');
+                input.classList.add('w-48', 'sm:w-72', 'opacity-100');
+                input.focus();
+            } else {
+                input.classList.remove('w-48', 'sm:w-72', 'opacity-100');
+                input.classList.add('w-0', 'opacity-0');
+                closeSearchDropdown();
+                currentSearchQuery = '';
+                refreshAllViews();
+            }
+        }
+
+        function closeSearchDropdown() {
+            const dropdown = document.getElementById('search-dropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+
+        // Helper to highlight searched words with optimal visible colors in both themes
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark class="bg-amber-500/40 text-black font-bold rounded px-1 border border-amber-400 light-mode:bg-amber-300 light-mode:text-black light-mode:border-amber-600">$1</mark>');
+        }
+
+        // Comprehensive Global Search with in-place item highlighting
+        function handleNavSearch(query) {
+            query = query.toLowerCase().trim();
+            currentSearchQuery = query;
+            const dropdown = document.getElementById('search-dropdown');
+            if (!dropdown) return;
+
+            // Refresh all views so in-place elements highlight matching terms/cards live
+            refreshAllViews();
+
+            if (!query) {
+                dropdown.classList.add('hidden');
+                dropdown.innerHTML = '';
+                return;
+            }
+
+            let resultsHTML = `<div class="text-xs uppercase text-amber-400 font-extrabold tracking-wider px-2.5 py-1.5 border-b border-gray-800">Search Results</div>`;
+            let matchCount = 0;
+
+            // 1. Search in Academics (Subjects & Topics)
+            let matchedAcademics = [];
+            academicSubjects.forEach(subj => {
+                if (subj.title.toLowerCase().includes(query) || subj.subtitle.toLowerCase().includes(query)) {
+                    matchedAcademics.push({ type: 'Subject', name: subj.title, sub: subj.subtitle, page: 'academics', id: subj.id });
+                }
+                subj.topics.forEach(top => {
+                    if (top.name.toLowerCase().includes(query)) {
+                        matchedAcademics.push({ type: 'Topic', name: top.name, sub: subj.title, page: 'academics', id: top.id });
+                    }
+                });
+            });
+
+            if (matchedAcademics.length > 0) {
+                resultsHTML += `<div class="pt-2.5"><div class="text-xs opacity-80 uppercase px-2.5 mb-1.5 font-bold text-amber-400">Academics (${matchedAcademics.length})</div>`;
+                matchedAcademics.slice(0, 3).forEach(item => {
+                    matchCount++;
+                    const highlightedName = highlightMatch(item.name, query);
+                    const highlightedSub = highlightMatch(item.sub, query);
+                    resultsHTML += `<div onclick="switchPage('${item.page}'); highlightInPlace('${item.id}');" class="p-2.5 hover:bg-dark-800 rounded-xl cursor-pointer flex items-center justify-between group transition-colors"><div class="truncate"><span class="font-bold text-amber-400">${highlightedName}</span> <span class="opacity-80 text-xs block mt-0.5">${highlightedSub}</span></div><div class="p-1 rounded-full group-hover:bg-amber-500/20 text-amber-400 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></div></div>`;
+                });
+                resultsHTML += `</div>`;
+            }
+
+            // 2. Search in Custom To-Do List
+            let matchedTodos = dailyTodos.filter(t => t.text.toLowerCase().includes(query));
+            if (matchedTodos.length > 0) {
+                resultsHTML += `<div class="pt-2.5 border-t border-gray-800/80"><div class="text-xs opacity-80 uppercase px-2.5 mb-1.5 font-bold text-cyan-400">To-Do List (${matchedTodos.length})</div>`;
+                matchedTodos.slice(0, 3).forEach(item => {
+                    matchCount++;
+                    const highlightedText = highlightMatch(item.text, query);
+                    resultsHTML += `<div onclick="switchPage('admission'); highlightInPlace('todo-${item.id}');" class="p-2.5 hover:bg-dark-800 rounded-xl cursor-pointer flex items-center justify-between group transition-colors"><div class="truncate"><span class="font-bold text-cyan-400">${highlightedText}</span> <span class="opacity-80 text-xs block mt-0.5">${item.done ? 'Completed' : 'Pending'}</span></div><div class="p-1 rounded-full group-hover:bg-cyan-400/20 text-cyan-400 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></div></div>`;
+                });
+                resultsHTML += `</div>`;
+            }
+
+            // 3. Search in Keep Notes
+            let matchedNotes = keepNotes.filter(n => n.title.toLowerCase().includes(query) || n.content.toLowerCase().includes(query));
+            if (matchedNotes.length > 0) {
+                resultsHTML += `<div class="pt-2.5 border-t border-gray-800/80"><div class="text-xs opacity-80 uppercase px-2.5 mb-1.5 font-bold text-amber-400">Keep Notes (${matchedNotes.length})</div>`;
+                matchedNotes.slice(0, 3).forEach(item => {
+                    matchCount++;
+                    const highlightedTitle = highlightMatch(item.title || 'Untitled', query);
+                    const highlightedContent = highlightMatch(item.content, query);
+                    resultsHTML += `<div onclick="switchPage('admission'); highlightInPlace('note-${item.id}');" class="p-2.5 hover:bg-dark-800 rounded-xl cursor-pointer flex items-center justify-between group transition-colors"><div class="truncate"><span class="font-bold text-amber-400">${highlightedTitle}</span> <span class="opacity-80 text-xs block truncate mt-0.5">${highlightedContent}</span></div><div class="p-1 rounded-full group-hover:bg-amber-500/20 text-amber-400 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></div></div>`;
+                });
+                resultsHTML += `</div>`;
+            }
+
+            // 4. Search in YouTube Tutorials
+            let matchedYouTube = userYouTubeLinks.filter(y => y.title.toLowerCase().includes(query) || y.subject.toLowerCase().includes(query));
+            if (matchedYouTube.length > 0) {
+                resultsHTML += `<div class="pt-2.5 border-t border-gray-800/80"><div class="text-xs opacity-80 uppercase px-2.5 mb-1.5 font-bold text-amber-400">YouTube Tutorials (${matchedYouTube.length})</div>`;
+                matchedYouTube.slice(0, 3).forEach(item => {
+                    matchCount++;
+                    const highlightedTitle = highlightMatch(item.title, query);
+                    const highlightedSubject = highlightMatch(item.subject, query);
+                    resultsHTML += `<div onclick="switchPage('research'); highlightInPlace('yt-${item.id}');" class="p-2.5 hover:bg-dark-800 rounded-xl cursor-pointer flex items-center justify-between group transition-colors"><div class="truncate"><span class="font-bold text-amber-400">${highlightedTitle}</span> <span class="opacity-80 text-xs block mt-0.5">${highlightedSubject}</span></div><div class="p-1 rounded-full group-hover:bg-amber-500/20 text-amber-400 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></div></div>`;
+                });
+                resultsHTML += `</div>`;
+            }
+
+            // 5. Search in Timetable
+            let matchedTimetable = userTimetable.filter(tt => tt.subject.toLowerCase().includes(query) || tt.time.toLowerCase().includes(query) || tt.day.toLowerCase().includes(query));
+            if (matchedTimetable.length > 0) {
+                resultsHTML += `<div class="pt-2.5 border-t border-gray-800/80"><div class="text-xs opacity-80 uppercase px-2.5 mb-1.5 font-bold text-cyan-400">Timetable Slots (${matchedTimetable.length})</div>`;
+                matchedTimetable.slice(0, 3).forEach(item => {
+                    matchCount++;
+                    const highlightedTime = highlightMatch(item.time, query);
+                    const highlightedSubject = highlightMatch(item.subject, query);
+                    resultsHTML += `<div onclick="switchPage('timetable'); highlightInPlace('tt-${item.id}');" class="p-2.5 hover:bg-dark-800 rounded-xl cursor-pointer flex items-center justify-between group transition-colors"><div class="truncate"><span class="font-bold text-cyan-400">${highlightedTime}</span> <span class="opacity-80 text-xs block mt-0.5">${highlightedSubject}</span></div><div class="p-1 rounded-full group-hover:bg-cyan-400/20 text-cyan-400 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></div></div>`;
+                });
+                resultsHTML += `</div>`;
+            }
+
+            if (matchCount === 0) {
+                resultsHTML += `<div class="p-5 text-center opacity-80 italic text-sm">No matching records found across workspace.</div>`;
+            }
+
+            dropdown.innerHTML = resultsHTML;
+            dropdown.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        // Function to scroll to and highlight a specific item in-place where it is in the workspace
+        function highlightInPlace(elementId) {
+            setTimeout(() => {
+                const el = document.getElementById(elementId) || document.getElementById(`card-${elementId}`);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    el.classList.add('search-highlight-active');
+                    setTimeout(() => {
+                        el.classList.remove('search-highlight-active');
+                    }, 2500);
+                }
+            }, 100);
+        }
+
+        function handleNavSearchKey(event) {
+            if (event.key === 'Enter') {
+                const firstResult = document.querySelector('#search-dropdown [onclick]');
+                if (firstResult) {
+                    firstResult.click();
+                }
+            }
+        }
+
+        // Close search dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const searchContainer = document.getElementById('nav-search-input')?.parentElement;
+            if (searchContainer && !searchContainer.contains(e.target)) {
+                closeSearchDropdown();
+            }
+        });
+
+        function refreshAllViews() {
+            renderAcademics();
+            saveAndRenderTodos();
+            renderKeepNotes();
+            renderYouTubeLinks();
+            renderTimetable();
+        }
+
+        // Academics & Dynamic Subjects / Topics State Management
+        let academicSubjects = JSON.parse(localStorage.getItem('gate_ece_subjects')) || [
+            {
+                id: 'sig',
+                title: '01. Signals & Systems',
+                subtitle: 'LTI, Fourier, Laplace, Z-Transform',
+                weightage: 'Weightage: 8 - 10 Marks',
+                topics: [
+                    { id: 'sig_1', name: 'LTI Convolution' },
+                    { id: 'sig_2', name: 'Fourier Transform' },
+                    { id: 'sig_3', name: 'Laplace Transform & ROC' },
+                    { id: 'sig_4', name: 'Z-Transform Systems' },
+                    { id: 'sig_5', name: 'Nyquist Sampling' }
+                ]
+            },
+            {
+                id: 'net',
+                title: '02. Network Theory',
+                subtitle: 'Thevenin, Transients & 2-Port',
+                weightage: 'Weightage: 8 - 10 Marks',
+                topics: [
+                    { id: 'net_1', name: 'KVL/KCL & Node Analysis' },
+                    { id: 'net_2', name: 'Thevenin & Max Power' },
+                    { id: 'net_3', name: 'RLC Transients' },
+                    { id: 'net_4', name: 'AC Resonance' },
+                    { id: 'net_5', name: 'Two-Port Parameters' }
+                ]
+            },
+            {
+                id: 'edc',
+                title: '03. Electronic Devices',
+                subtitle: 'Carrier Drift, PN, MOSFET',
+                weightage: 'Weightage: 9 - 11 Marks',
+                topics: [
+                    { id: 'edc_1', name: 'Energy Bands & Fermi' },
+                    { id: 'edc_2', name: 'Carrier Drift & Diffusion' },
+                    { id: 'edc_3', name: 'PN Junction Depletion' },
+                    { id: 'edc_4', name: 'BJT Physics & Early Effect' },
+                    { id: 'edc_5', name: 'MOS Capacitor & MOSFET' }
+                ]
+            },
+            {
+                id: 'ana',
+                title: '04. Analog Circuits',
+                subtitle: 'Op-Amps & Small-Signal',
+                weightage: 'Weightage: 10 - 12 Marks',
+                topics: [
+                    { id: 'ana_1', name: 'Diode Clippers/Clampers' },
+                    { id: 'ana_2', name: 'BJT / MOSFET Biasing' },
+                    { id: 'ana_3', name: 'Small-Signal Amplifiers' },
+                    { id: 'ana_4', name: 'Ideal & Practical Op-Amps' },
+                    { id: 'ana_5', name: 'Feedback & Oscillators' }
+                ]
+            },
+            {
+                id: 'dig',
+                title: '05. Digital Circuits',
+                subtitle: 'K-Maps, Flip-Flops & CMOS',
+                weightage: 'Weightage: 8 - 10 Marks',
+                topics: [
+                    { id: 'dig_1', name: 'Boolean Logic & K-Maps' },
+                    { id: 'dig_2', name: 'MUX, Decoders & Adders' },
+                    { id: 'dig_3', name: 'Flip-Flops & Timing' },
+                    { id: 'dig_4', name: 'Counters & Shift Registers' },
+                    { id: 'dig_5', name: 'CMOS Logic & ADCs' }
+                ]
+            },
+            {
+                id: 'ctrl',
+                title: '06. Control Systems',
+                subtitle: 'Routh, Bode & State Space',
+                weightage: 'Weightage: 8 - 10 Marks',
+                topics: [
+                    { id: 'ctrl_1', name: 'Block Diagrams & SFG' },
+                    { id: 'ctrl_2', name: 'Time Response Specs' },
+                    { id: 'ctrl_3', name: 'Routh-Hurwitz & Locus' },
+                    { id: 'ctrl_4', name: 'Bode & Nyquist Plots' },
+                    { id: 'ctrl_5', name: 'State Space Equations' }
+                ]
+            },
+            {
+                id: 'comm',
+                title: '07. Communications',
+                subtitle: 'AM, FM, PCM & Noise',
+                weightage: 'Weightage: 10 - 12 Marks',
+                topics: [
+                    { id: 'comm_1', name: 'AM & FM Modulation' },
+                    { id: 'comm_2', name: 'Random Processes & Noise' },
+                    { id: 'comm_3', name: 'PCM & Quantization SNR' },
+                    { id: 'comm_4', name: 'Digital Mod (BPSK, QPSK)' },
+                    { id: 'comm_5', name: 'Matched Filter & BER' }
+                ]
+            },
+            {
+                id: 'emft',
+                title: '08. Electromagnetics & Math',
+                subtitle: 'Maxwell, T-Lines & Calculus',
+                weightage: 'Weightage: 18 - 20 Marks',
+                topics: [
+                    { id: 'emft_1', name: 'Maxwell Equations' },
+                    { id: 'emft_2', name: 'Transmission Lines & VSWR' },
+                    { id: 'emft_3', name: 'Waveguides & Antennas' },
+                    { id: 'emft_4', name: 'Linear Algebra & Matrices' },
+                    { id: 'emft_5', name: 'Vector Calculus & Probability' }
+                ]
+            }
+        ];
+
+        function renderAcademics() {
+            localStorage.setItem('gate_ece_subjects', JSON.stringify(academicSubjects));
+            const container = document.getElementById('academics-grid-container');
+            if (!container) return;
+
+            let allTopicsCount = 0;
+            let checkedTopicsCount = 0;
+
+            container.innerHTML = academicSubjects.map((subj, idx) => {
+                const accentColor = idx % 2 === 0 ? 'amber-400' : 'cyan-400';
+                const dispTitle = highlightMatch(subj.title, currentSearchQuery);
+                const dispSub = highlightMatch(subj.subtitle, currentSearchQuery);
+
+                return `
+                    <div id="${subj.id}" class="glass-panel p-5 sm:p-6 rounded-2xl flex flex-col justify-between shadow-2xl transition-all border-amber-500/30">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-sm sm:text-base font-bold font-mono text-gray-100">${dispTitle}</h3>
+                                ${academicSubjects.length > 8 ? `<button onclick="removeSubject('${subj.id}')" class="opacity-80 hover:text-red-400 p-1" title="Delete Subject"><i data-lucide="trash-2" class="w-4 h-4"></i></button>` : ''}
+                            </div>
+                            <p class="text-xs font-mono text-${accentColor} mb-4 font-extrabold">${dispSub}</p>
+                            <div class="space-y-2.5 font-mono bg-dark-900/90 p-3 sm:p-3.5 rounded-xl border border-gray-800 mb-4 text-xs sm:text-sm">
+                                ${subj.topics.map(topic => {
+                                    allTopicsCount++;
+                                    const isChecked = localStorage.getItem(`gate_ece_mod_${topic.id}`) === 'true';
+                                    if (isChecked) checkedTopicsCount++;
+                                    const dispTopicName = highlightMatch(topic.name, currentSearchQuery);
+                                    return `
+                                        <div id="${topic.id}" class="flex items-center justify-between group rounded p-1 transition-colors">
+                                            <label class="flex items-center gap-2.5 cursor-pointer flex-grow">
+                                                <input type="checkbox" onchange="toggleTopic('${topic.id}')" id="chk_${topic.id}" ${isChecked ? 'checked' : ''} class="w-4 h-4 accent-${accentColor}">
+                                                <span class="text-gray-200">${dispTopicName}</span>
+                                            </label>
+                                            <button onclick="removeTopic('${subj.id}', '${topic.id}')" class="opacity-0 group-hover:opacity-80 hover:text-red-400 p-1" title="Remove Topic"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>
+                                        </div>
+                                    `;
+                                }).join('')}
+                                <div class="pt-2.5 border-t border-gray-800 flex gap-2 mt-3">
+                                    <input type="text" id="new-topic-${subj.id}" placeholder="Add topic..." onkeydown="if(event.key==='Enter') addTopicToSubject('${subj.id}')" class="flex-grow bg-dark-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-${accentColor}">
+                                    <button onclick="addTopicToSubject('${subj.id}')" class="px-3 py-1.5 rounded-lg bg-${accentColor} text-black font-extrabold text-xs hover:opacity-90 shrink-0 shadow-md">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono font-extrabold text-${accentColor}">${subj.weightage}</span>
+                    </div>
+                `;
+            }).join('');
+
+            updateOverallProgressCustom(checkedTopicsCount, allTopicsCount);
+            lucide.createIcons();
+        }
+
+        function updateOverallProgressCustom(checkedCount, totalCount) {
+            const percentage = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+            
+            const txt = document.getElementById('page-progress-text');
+            const bar = document.getElementById('page-progress-bar');
+            const navTxt = document.getElementById('nav-overall-progress');
+
+            if (txt) txt.innerText = `${checkedCount} / ${totalCount} Topics (${percentage}%)`;
+            if (bar) bar.style.width = `${percentage}%`;
+            if (navTxt) navTxt.innerText = `${percentage}% DONE`;
+        }
+
+        function toggleTopic(key) {
+            const el = document.getElementById(`chk_${key}`);
+            if (el) localStorage.setItem(`gate_ece_mod_${key}`, el.checked);
+            renderAcademics();
+        }
+
+        function addCustomSubject() {
+            const titleInput = document.getElementById('new-subj-title');
+            const subInput = document.getElementById('new-subj-sub');
+            const weightInput = document.getElementById('new-subj-weight');
+
+            const title = titleInput ? titleInput.value.trim() : '';
+            const subtitle = subInput ? subInput.value.trim() : '';
+            const weightage = weightInput ? weightInput.value.trim() : '';
+
+            if (!title) return;
+
+            const id = 'subj_' + Date.now();
+            academicSubjects.push({
+                id,
+                title,
+                subtitle: subtitle || 'Custom Subject',
+                weightage: weightage ? `Weightage: ${weightage}` : 'Weightage: Custom',
+                topics: [
+                    { id: `${id}_1`, name: 'Introduction & Core Concepts' }
+                ]
+            });
+
+            if (titleInput) titleInput.value = '';
+            if (subInput) subInput.value = '';
+            if (weightInput) weightInput.value = '';
+
+            renderAcademics();
+        }
+
+        function removeSubject(subjectId) {
+            academicSubjects = academicSubjects.filter(s => s.id !== subjectId);
+            renderAcademics();
+        }
+
+        function addTopicToSubject(subjectId) {
+            const input = document.getElementById(`new-topic-${subjectId}`);
+            const val = input ? input.value.trim() : '';
+            if (!val) return;
+
+            const subj = academicSubjects.find(s => s.id === subjectId);
+            if (subj) {
+                const topicId = `${subjectId}_${Date.now()}`;
+                subj.topics.push({ id: topicId, name: val });
+                renderAcademics();
+            }
+        }
+
+        function removeTopic(subjectId, topicId) {
+            const subj = academicSubjects.find(s => s.id === subjectId);
+            if (subj) {
+                subj.topics = subj.topics.filter(t => t.id !== topicId);
+                localStorage.removeItem(`gate_ece_mod_${topicId}`);
+                renderAcademics();
+            }
+        }
+
+        // Custom To-Do List
+        let dailyTodos = JSON.parse(localStorage.getItem('gate_custom_todos')) || [
+            { id: 1, text: "Solve 20 NAT questions on Op-Amps", done: false },
+            { id: 2, text: "Revise Fourier Series formulas", done: true }
+        ];
+
+        function saveAndRenderTodos() {
+            localStorage.setItem('gate_custom_todos', JSON.stringify(dailyTodos));
+            const container = document.getElementById('todo-list-container');
+            const countEl = document.getElementById('todo-count');
+            if (!container) return;
+
+            const pending = dailyTodos.filter(t => !t.done).length;
+            if (countEl) countEl.innerText = `${pending} Tasks Pending`;
+
+            if (dailyTodos.length === 0) {
+                container.innerHTML = `<div class="opacity-80 italic py-2 text-sm">No tasks added yet.</div>`;
+                return;
+            }
+
+            container.innerHTML = dailyTodos.map(todo => {
+                const dispText = highlightMatch(todo.text, currentSearchQuery);
+                return `
+                    <div id="todo-${todo.id}" class="flex items-center justify-between bg-dark-800 p-3.5 rounded-xl border border-amber-500/20 shadow-md transition-all">
+                        <label class="flex items-center gap-3 cursor-pointer hover:opacity-100 ${todo.done ? 'line-through opacity-60' : ''}">
+                            <input type="checkbox" onchange="toggleTodo(${todo.id})" ${todo.done ? 'checked' : ''} class="w-4 h-4 accent-amber-400">
+                            <span class="text-xs sm:text-sm text-gray-200">${dispText}</span>
+                        </label>
+                        <button onclick="removeTodo(${todo.id})" class="opacity-80 hover:text-red-400 p-1.5">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function addCustomTodo() {
+            const input = document.getElementById('new-todo-input');
+            const val = input ? input.value.trim() : '';
+            if (!val) return;
+            dailyTodos.push({ id: Date.now(), text: val, done: false });
+            input.value = '';
+            saveAndRenderTodos();
+        }
+
+        function toggleTodo(id) {
+            dailyTodos = dailyTodos.map(t => t.id === id ? { ...t, done: !t.done } : t);
+            saveAndRenderTodos();
+        }
+
+        function removeTodo(id) {
+            dailyTodos = dailyTodos.filter(t => t.id !== id);
+            saveAndRenderTodos();
+        }
+
+        // Google Keep-Style Notes
+        let keepNotes = JSON.parse(localStorage.getItem('gate_keep_notes')) || [
+            { id: 1, title: "Op-Amp Golden Rules", content: "1. Infinite input impedance. 2. Zero output impedance. 3. V+ = V- in negative feedback." }
+        ];
+
+        function renderKeepNotes() {
+            localStorage.setItem('gate_keep_notes', JSON.stringify(keepNotes));
+            const container = document.getElementById('keep-notes-container');
+            const countEl = document.getElementById('notes-count');
+            if (!container) return;
+
+            if (countEl) countEl.innerText = `${keepNotes.length} Notes Saved`;
+
+            if (keepNotes.length === 0) {
+                container.innerHTML = `<div class="opacity-80 italic py-2 text-sm">No notes saved yet. Jot something down above!</div>`;
+                return;
+            }
+
+            container.innerHTML = keepNotes.map(note => {
+                const dispTitle = highlightMatch(note.title || 'Untitled', currentSearchQuery);
+                const dispContent = highlightMatch(note.content, currentSearchQuery);
+                return `
+                    <div id="note-${note.id}" class="bg-dark-800 p-4 rounded-xl border border-cyan-400/30 relative group shadow-md transition-all">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <h4 class="text-xs sm:text-sm font-bold text-cyan-400">${dispTitle}</h4>
+                            <button onclick="removeKeepNote(${note.id})" class="opacity-80 hover:text-red-400 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                        <p class="text-xs opacity-90 whitespace-pre-wrap leading-relaxed text-gray-200">${dispContent}</p>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function addKeepNote() {
+            const titleInput = document.getElementById('keep-note-title');
+            const contentInput = document.getElementById('keep-note-content');
+            const title = titleInput ? titleInput.value.trim() : '';
+            const content = contentInput ? contentInput.value.trim() : '';
+
+            if (!title && !content) return;
+            keepNotes.push({ id: Date.now(), title, content });
+            titleInput.value = '';
+            contentInput.value = '';
+            renderKeepNotes();
+        }
+
+        function removeKeepNote(id) {
+            keepNotes = keepNotes.filter(n => n.id !== id);
+            renderKeepNotes();
+        }
+
+        // Custom YouTube Tutorials & Channels Hub
+        let userYouTubeLinks = JSON.parse(localStorage.getItem('gate_user_youtube')) || [
+            { id: 1, title: "Signals & Systems NPTEL Full", subject: "Signals", url: "https://www.youtube.com/results?search_query=NPTEL+Signals+and+Systems" }
+        ];
+
+        function renderYouTubeLinks() {
+            localStorage.setItem('gate_user_youtube', JSON.stringify(userYouTubeLinks));
+            const container = document.getElementById('youtube-list-container');
+            if (!container) return;
+
+            if (userYouTubeLinks.length === 0) {
+                container.innerHTML = `<div class="opacity-80 italic py-3 col-span-3 text-sm">No YouTube tutorials added yet. Use the form above to add your own!</div>`;
+                return;
+            }
+
+            container.innerHTML = userYouTubeLinks.map(item => {
+                const dispTitle = highlightMatch(item.title, currentSearchQuery);
+                const dispSubject = highlightMatch(item.subject, currentSearchQuery);
+                return `
+                    <div id="yt-${item.id}" class="glass-panel p-4 sm:p-5 rounded-2xl flex flex-col justify-between border-amber-500/30 shadow-2xl transition-all">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/40 uppercase font-extrabold">${dispSubject}</span>
+                                <button onclick="removeYouTubeLink(${item.id})" class="opacity-80 hover:text-red-400 p-1.5"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                            <h4 class="text-sm sm:text-base font-bold mb-3 text-gray-100">${dispTitle}</h4>
+                        </div>
+                        <a href="${item.url}" target="_blank" class="mt-4 py-2.5 rounded-xl bg-red-600/30 border border-red-500/60 text-red-300 hover:bg-red-600 hover:text-white transition-all text-center text-xs font-extrabold uppercase flex items-center justify-center gap-2 shadow-md">
+                            <i data-lucide="youtube" class="w-4 h-4"></i> Open Tutorial ↗
+                        </a>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function addYouTubeLink() {
+            const title = document.getElementById('yt-title').value.trim();
+            const subject = document.getElementById('yt-subject').value.trim();
+            const url = document.getElementById('yt-url').value.trim();
+
+            if (!title || !subject || !url) return;
+            userYouTubeLinks.push({ id: Date.now(), title, subject, url });
+            document.getElementById('yt-title').value = '';
+            document.getElementById('yt-subject').value = '';
+            document.getElementById('yt-url').value = '';
+            renderYouTubeLinks();
+        }
+
+        function removeYouTubeLink(id) {
+            userYouTubeLinks = userYouTubeLinks.filter(i => i.id !== id);
+            renderYouTubeLinks();
+        }
+
+        // Custom Timetable Manager Logic
+        let userTimetable = JSON.parse(localStorage.getItem('gate_custom_timetable')) || [
+            { id: 1, time: "06:00 AM - 09:00 AM", subject: "High-weightage concept practice & NAT numericals", day: "Daily Routine" },
+            { id: 2, time: "02:00 PM - 05:00 PM", subject: "Full-length 3-Hour CBT Mock Test", day: "Daily Routine" }
+        ];
+
+        function renderTimetable() {
+            localStorage.setItem('gate_custom_timetable', JSON.stringify(userTimetable));
+            const container = document.getElementById('timetable-list-container');
+            if (!container) return;
+
+            if (userTimetable.length === 0) {
+                container.innerHTML = `<div class="opacity-80 italic py-2 text-sm">No timetable slots added yet. Use the form above to plan your study routine!</div>`;
+                return;
+            }
+
+            container.innerHTML = userTimetable.map(slot => {
+                const dispTime = highlightMatch(slot.time, currentSearchQuery);
+                const dispSubject = highlightMatch(slot.subject, currentSearchQuery);
+                const dispDay = highlightMatch(slot.day, currentSearchQuery);
+                return `
+                    <div id="tt-${slot.id}" class="glass-panel p-4 sm:p-5 rounded-2xl flex items-center justify-between border-l-4 border-l-amber-400 shadow-2xl transition-all">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1.5 flex-wrap">
+                                <span class="text-amber-400 font-extrabold text-xs sm:text-sm">${dispTime}</span>
+                                <span class="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full bg-dark-900 text-cyan-400 border border-cyan-400/30 font-bold">${dispDay}</span>
+                            </div>
+                            <p class="opacity-95 text-xs sm:text-sm text-gray-200">${dispSubject}</p>
+                        </div>
+                        <button onclick="removeTimetableSlot(${slot.id})" class="opacity-80 hover:text-red-400 p-2 shrink-0">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function addTimetableSlot() {
+            const time = document.getElementById('tt-time').value.trim();
+            const subject = document.getElementById('tt-subject').value.trim();
+            const day = document.getElementById('tt-day').value.trim();
+
+            if (!time || !subject || !day) return;
+            userTimetable.push({ id: Date.now(), time, subject, day });
+            document.getElementById('tt-time').value = '';
+            document.getElementById('tt-subject').value = '';
+            document.getElementById('tt-day').value = '';
+            renderTimetable();
+        }
+
+        function removeTimetableSlot(id) {
+            userTimetable = userTimetable.filter(s => s.id !== id);
+            renderTimetable();
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            refreshAllViews();
+        });
+    </script>
+</body>
+</html>
