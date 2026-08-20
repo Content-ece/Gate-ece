@@ -124,11 +124,11 @@
             background-color: rgba(255, 191, 0, 0.3) !important;
         }
 
-        /* AI Assistant Custom Styles */
-        .ai-scrollbar::-webkit-scrollbar {
+        /* AI Assistant Custom Scrollbar */
+        .ai-chat-scrollbar::-webkit-scrollbar {
             width: 5px;
         }
-        .ai-scrollbar::-webkit-scrollbar-thumb {
+        .ai-chat-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(255, 145, 0, 0.3);
             border-radius: 4px;
         }
@@ -211,8 +211,8 @@
                         <i data-lucide="cpu" class="w-4 h-4"></i> GATE 2027 ECE Preparation Portal
                     </div>
                     <h1 class="text-3xl sm:text-6xl font-extrabold font-mono tracking-tight leading-tight">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-400 drop-shadow-[0_0_20px_rgba(0,229,255,0.5)]">SILICON MEETS SIGNAL</span> 
-                    </h1>
+    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-400 drop-shadow-[0_0_20px_rgba(0,229,255,0.5)]">SILICON MEETS SIGNAL</span> 
+</h1>
                     <p class="text-sm sm:text-lg leading-relaxed opacity-90">
                         Welcome to the official GATE ECE portal. Use the navigation bar above to switch seamlessly between Academics, Syllabus Tracking, Google Keep Notes, Research & PYQs, and your Custom Timetable Hub.
                     </p>
@@ -424,46 +424,46 @@
     </main>
 
     <!-- FLOATING AI DOUBT SOLVER WIDGET -->
-    <!-- Trigger Button -->
+    <!-- Trigger Launcher Button -->
     <button id="ai-launcher-btn" onclick="toggleAIChat()" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-black font-mono font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(255,145,0,0.7)] hover:scale-105 active:scale-95 transition-all">
         <i data-lucide="bot" class="w-5 h-5"></i>
         <span>AI Doubt Solver</span>
     </button>
 
     <!-- AI Chat Window -->
-    <div id="ai-chat-window" class="hidden fixed bottom-20 sm:bottom-24 right-4 sm:right-8 z-50 w-[94vw] sm:w-[420px] h-[520px] max-h-[80vh] glass-panel border border-amber-500/60 rounded-3xl shadow-2xl flex flex-col font-mono text-xs sm:text-sm overflow-hidden backdrop-blur-xl">
+    <div id="ai-chat-window" class="hidden fixed bottom-20 sm:bottom-24 right-4 sm:right-8 z-50 w-[94vw] sm:w-[430px] h-[540px] max-h-[82vh] glass-panel border border-amber-500/60 rounded-3xl shadow-2xl flex flex-col font-mono text-xs sm:text-sm overflow-hidden backdrop-blur-xl">
         <!-- Header -->
-        <div class="px-4 py-3.5 bg-dark-900/90 border-b border-amber-500/30 flex items-center justify-between">
+        <div class="px-4 py-3.5 bg-dark-900/95 border-b border-amber-500/30 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-black font-bold">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-black font-bold shadow-md">
+                    <i data-lucide="cpu" class="w-4 h-4"></i>
                 </div>
                 <div>
                     <span class="font-bold text-amber-400 block leading-tight">GATE ECE AI TUTOR</span>
-                    <span class="text-[10px] text-cyan-400 opacity-90 block">Powered by Free AI Gateway</span>
+                    <span class="text-[10px] text-cyan-400 opacity-90 block">Llama 3.3 70B • All Topics Free</span>
                 </div>
             </div>
             <div class="flex items-center gap-1.5">
-                <button onclick="clearAIChat()" class="p-1.5 hover:text-amber-400 opacity-80" title="Clear Chat">
+                <button onclick="clearAIChat()" class="p-1.5 hover:text-amber-400 opacity-80 transition-colors" title="Clear Chat History">
                     <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                 </button>
-                <button onclick="toggleAIChat()" class="p-1.5 hover:text-red-400 opacity-80" title="Close">
+                <button onclick="toggleAIChat()" class="p-1.5 hover:text-red-400 opacity-80 transition-colors" title="Close">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Messages Area -->
-        <div id="ai-chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3.5 ai-scrollbar bg-dark-950/60">
-            <div class="bg-dark-900 border border-amber-500/20 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]">
-                <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Assistant:</span>
-                Ask me about any ECE subject, formula, derivation, or problem! (Signals, Networks, EDC, Analog, Control Systems, Comm).
+        <!-- Messages Container -->
+        <div id="ai-chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3.5 ai-chat-scrollbar bg-dark-950/70">
+            <div class="bg-dark-900/90 border border-amber-500/30 p-3.5 rounded-2xl text-xs leading-relaxed max-w-[92%] shadow-sm">
+                <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Master Tutor Online:</span>
+                Ask me any GATE ECE doubt, numerical calculation, formula derivation, or theoretical concept across all 8 modules (Signals, Networks, EDC, Analog, Digital, Control, Communications, EMFT & Math)!
             </div>
         </div>
 
-        <!-- Input Area -->
-        <div class="p-3 bg-dark-900/90 border-t border-amber-500/30 flex gap-2">
-            <input type="text" id="ai-input-field" placeholder="Ask doubt (e.g. Nyquist rate formula)..." onkeydown="if(event.key==='Enter') sendAIMessage()" class="flex-1 bg-dark-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-amber-400">
+        <!-- Input Box Area -->
+        <div class="p-3 bg-dark-900/95 border-t border-amber-500/30 flex gap-2">
+            <input type="text" id="ai-input-field" placeholder="Ask doubt (e.g., Nyquist rate, BJT biasing)..." onkeydown="if(event.key==='Enter') sendAIMessage()" class="flex-1 bg-dark-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-amber-400">
             <button id="ai-send-btn" onclick="sendAIMessage()" class="px-4 py-2.5 rounded-xl bg-amber-500 text-black font-extrabold hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center shadow-md">
                 <i data-lucide="send" class="w-4 h-4"></i>
             </button>
@@ -569,6 +569,7 @@
             const dropdown = document.getElementById('search-dropdown');
             if (!dropdown) return;
 
+            // Refresh all views so in-place elements highlight matching terms/cards live
             refreshAllViews();
 
             if (!query) {
@@ -664,6 +665,7 @@
             lucide.createIcons();
         }
 
+        // Function to scroll to and highlight a specific item in-place where it is in the workspace
         function highlightInPlace(elementId) {
             setTimeout(() => {
                 const el = document.getElementById(elementId) || document.getElementById(`card-${elementId}`);
@@ -686,6 +688,7 @@
             }
         }
 
+        // Close search dropdown when clicking outside
         document.addEventListener('click', (e) => {
             const searchContainer = document.getElementById('nav-search-input')?.parentElement;
             if (searchContainer && !searchContainer.contains(e.target)) {
@@ -1157,14 +1160,31 @@
             renderTimetable();
         }
 
-        // ==========================================
-        // FREE AI ASSISTANT INTEGRATION LOGIC
-        // ==========================================
+        // =========================================================================
+        // FULLY INTEGRATED FREE AI DOUBT SOLVER (LLAMA 3.3 70B VIA OPENROUTER)
+        // =========================================================================
         const OPENROUTER_API_KEY = "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";
 
         const systemPrompt = {
             role: "system",
-            content: "You are an expert AI Doubt Solver & Tutor specialized in GATE Electronics and Communication Engineering (ECE). Provide accurate, concise answers for engineering mathematics, signals & systems, networks, electronic devices (EDC), analog circuits, digital circuits, control systems, electromagnetics, and communications. Include formulas, numerical steps, and standard theoretical definitions where helpful."
+            content: `You are an elite GATE Electronics and Communication Engineering (ECE) Master Tutor and Exam Specialist.
+Your mission is to answer ANY question across the entire GATE ECE syllabus with 100% technical and mathematical precision:
+
+1. CORE SYLLABUS MASTERY:
+   - Engineering Mathematics: Linear Algebra (Eigenvalues, Rank), Calculus, Differential Equations, Complex Variables, Probability & Statistics.
+   - Networks: KCL/KVL, Node/Mesh, Thevenin/Norton/Max Power theorems, Transient analysis of RLC, Sinusoidal steady-state, Two-port network parameters (Z, Y, ABCD, h).
+   - Signals & Systems: Continuous & Discrete LTI systems, Convolution, Fourier Series/Transform, Laplace Transform (ROC), Z-Transform, Nyquist sampling theorem.
+   - Electronic Devices (EDC): Energy bands, Carrier transport (drift/diffusion), PN junction physics, Zener, BJT (Early effect), MOS capacitor (accumulation, depletion, inversion), MOSFET I-V equations.
+   - Analog Circuits: Small-signal models (BJT & MOSFET), Biasing, Op-Amp circuits (inverting, non-inverting, integrators, Schmitt trigger, multivibrators), Feedback topologies, Oscillators, 555 timers.
+   - Digital Circuits: Boolean algebra, K-maps, Combinational circuits (MUX, Decoders, Adders), Sequential circuits (Flip-flops, Counters, Shift registers), CMOS logic gates, ADC/DAC converters.
+   - Control Systems: Block diagram reduction, Signal Flow Graphs (Mason's rule), Time domain specs (damping, settling time), Routh-Hurwitz, Root Locus, Bode plots, Nyquist criterion, State space analysis.
+   - Communications: Analog (AM, DSB-SC, SSB, FM, Carson's rule), Noise (SNR, Noise figure), Digital (Sampling, Quantization SNR, PCM, DPCM), Digital Modulation (ASK, FSK, PSK, QAM, Constellations), Matched filter, BER, Information Theory (Entropy, Mutual info, Shannon capacity).
+   - Electromagnetics (EMFT): Maxwell's equations, Uniform Plane Waves, Poynting vector, Transmission lines (Impedance matching, Reflection coefficient, VSWR, Smith Chart), Rectangular Waveguides, Antennas (Gain, Directivity, Radiation pattern).
+
+2. ANSWERING RULES:
+   - Numerical/NAT: State standard formula -> Substitute given parameters -> Show step-by-step arithmetic -> State final numerical value with exact units.
+   - Conceptual/Theory: Give direct definitions, standard characteristics, diagrams/expressions, and edge cases tested in GATE PYQs.
+   - Always be clear, concise, structured, and helpful.`
         };
 
         let aiChatHistory = JSON.parse(localStorage.getItem('gate_ai_history')) || [systemPrompt];
@@ -1184,9 +1204,9 @@
             localStorage.removeItem('gate_ai_history');
             const messagesContainer = document.getElementById('ai-chat-messages');
             messagesContainer.innerHTML = `
-                <div class="bg-dark-900 border border-amber-500/20 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]">
-                    <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Assistant:</span>
-                    Chat cleared. Ask me any GATE ECE doubt or question!
+                <div class="bg-dark-900/90 border border-amber-500/30 p-3.5 rounded-2xl text-xs leading-relaxed max-w-[92%] shadow-sm">
+                    <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Master Tutor Online:</span>
+                    Chat cleared. Ask me any GATE ECE doubt, derivation, or problem!
                 </div>
             `;
         }
@@ -1199,9 +1219,9 @@
 
             if (!query) return;
 
-            // Render user bubble
+            // Render User Bubble
             const userBubble = document.createElement('div');
-            userBubble.className = "bg-amber-500/20 border border-amber-500/40 p-3 rounded-2xl text-xs leading-relaxed max-w-[85%] ml-auto text-amber-200";
+            userBubble.className = "bg-amber-500/20 border border-amber-500/40 p-3 rounded-2xl text-xs leading-relaxed max-w-[85%] ml-auto text-amber-200 shadow-sm";
             userBubble.innerHTML = `<span class="font-bold text-amber-400 block mb-0.5">You:</span>${query.replace(/</g, "&lt;").replace(/>/g, "&gt;")}`;
             container.appendChild(userBubble);
 
@@ -1210,13 +1230,13 @@
             btn.disabled = true;
             container.scrollTop = container.scrollHeight;
 
-            // Push to history
+            // Add to conversation history
             aiChatHistory.push({ role: "user", content: query });
 
-            // Render thinking indicator
+            // Render Thinking Bubble
             const botBubble = document.createElement('div');
-            botBubble.className = "bg-dark-900 border border-cyan-400/30 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]";
-            botBubble.innerHTML = `<span class="text-cyan-400 font-bold block mb-0.5">GATE AI:</span><span class="animate-pulse text-gray-400">Computing response...</span>`;
+            botBubble.className = "bg-dark-900 border border-cyan-400/30 p-3.5 rounded-2xl text-xs leading-relaxed max-w-[92%] shadow-sm";
+            botBubble.innerHTML = `<span class="text-cyan-400 font-bold block mb-0.5">GATE AI:</span><span class="animate-pulse text-gray-400">Computing step-by-step solution...</span>`;
             container.appendChild(botBubble);
             container.scrollTop = container.scrollHeight;
 
@@ -1230,7 +1250,7 @@
                         "X-Title": "GATE MATRIX ECE Workspace"
                     },
                     body: JSON.stringify({
-                        model: "meta-llama/llama-3-8b-instruct:free",
+                        model: "meta-llama/llama-3.3-70b-instruct:free",
                         messages: aiChatHistory
                     })
                 });
@@ -1243,10 +1263,10 @@
                     aiChatHistory.push({ role: "assistant", content: aiReply });
                     localStorage.setItem('gate_ai_history', JSON.stringify(aiChatHistory));
                 } else {
-                    botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Notice:</span>Please make sure you have added your valid free OpenRouter API key inside the script.`;
+                    botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Notice:</span>Unable to retrieve solution. Please retry your question.`;
                 }
             } catch (err) {
-                botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Error:</span>Unable to connect to AI server. Check your network connection.`;
+                botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Error:</span>Unable to connect to AI server. Please check your network connection.`;
                 console.error(err);
             } finally {
                 input.disabled = false;
