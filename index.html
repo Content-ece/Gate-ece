@@ -123,6 +123,15 @@
             border: 2px solid #d97706 !important;
             background-color: rgba(255, 191, 0, 0.3) !important;
         }
+
+        /* AI Assistant Custom Styles */
+        .ai-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .ai-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 145, 0, 0.3);
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="bg-dark-950 text-gray-200 circuit-bg min-h-screen font-sans selection:bg-amber-500 selection:text-black text-base overflow-x-hidden">
@@ -202,8 +211,8 @@
                         <i data-lucide="cpu" class="w-4 h-4"></i> GATE 2027 ECE Preparation Portal
                     </div>
                     <h1 class="text-3xl sm:text-6xl font-extrabold font-mono tracking-tight leading-tight">
-    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-400 drop-shadow-[0_0_20px_rgba(0,229,255,0.5)]">SILICON MEETS SIGNAL</span> 
-</h1>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-400 drop-shadow-[0_0_20px_rgba(0,229,255,0.5)]">SILICON MEETS SIGNAL</span> 
+                    </h1>
                     <p class="text-sm sm:text-lg leading-relaxed opacity-90">
                         Welcome to the official GATE ECE portal. Use the navigation bar above to switch seamlessly between Academics, Syllabus Tracking, Google Keep Notes, Research & PYQs, and your Custom Timetable Hub.
                     </p>
@@ -414,6 +423,53 @@
 
     </main>
 
+    <!-- FLOATING AI DOUBT SOLVER WIDGET -->
+    <!-- Trigger Button -->
+    <button id="ai-launcher-btn" onclick="toggleAIChat()" class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-black font-mono font-black text-xs sm:text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(255,145,0,0.7)] hover:scale-105 active:scale-95 transition-all">
+        <i data-lucide="bot" class="w-5 h-5"></i>
+        <span>AI Doubt Solver</span>
+    </button>
+
+    <!-- AI Chat Window -->
+    <div id="ai-chat-window" class="hidden fixed bottom-20 sm:bottom-24 right-4 sm:right-8 z-50 w-[94vw] sm:w-[420px] h-[520px] max-h-[80vh] glass-panel border border-amber-500/60 rounded-3xl shadow-2xl flex flex-col font-mono text-xs sm:text-sm overflow-hidden backdrop-blur-xl">
+        <!-- Header -->
+        <div class="px-4 py-3.5 bg-dark-900/90 border-b border-amber-500/30 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-amber-500 flex items-center justify-center text-black font-bold">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-amber-400 block leading-tight">GATE ECE AI TUTOR</span>
+                    <span class="text-[10px] text-cyan-400 opacity-90 block">Powered by Free AI Gateway</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <button onclick="clearAIChat()" class="p-1.5 hover:text-amber-400 opacity-80" title="Clear Chat">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+                <button onclick="toggleAIChat()" class="p-1.5 hover:text-red-400 opacity-80" title="Close">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="ai-chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3.5 ai-scrollbar bg-dark-950/60">
+            <div class="bg-dark-900 border border-amber-500/20 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]">
+                <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Assistant:</span>
+                Ask me about any ECE subject, formula, derivation, or problem! (Signals, Networks, EDC, Analog, Control Systems, Comm).
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-3 bg-dark-900/90 border-t border-amber-500/30 flex gap-2">
+            <input type="text" id="ai-input-field" placeholder="Ask doubt (e.g. Nyquist rate formula)..." onkeydown="if(event.key==='Enter') sendAIMessage()" class="flex-1 bg-dark-800 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-amber-400">
+            <button id="ai-send-btn" onclick="sendAIMessage()" class="px-4 py-2.5 rounded-xl bg-amber-500 text-black font-extrabold hover:bg-amber-400 active:scale-95 transition-all flex items-center justify-center shadow-md">
+                <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="border-t border-amber-500/30 py-8 sm:py-10 px-4 text-center font-mono text-xs sm:text-sm opacity-95">
         <p class="mb-1.5 font-bold text-amber-400">GATE MATRIX ECE • Modular Academic Workspace</p>
@@ -513,7 +569,6 @@
             const dropdown = document.getElementById('search-dropdown');
             if (!dropdown) return;
 
-            // Refresh all views so in-place elements highlight matching terms/cards live
             refreshAllViews();
 
             if (!query) {
@@ -609,7 +664,6 @@
             lucide.createIcons();
         }
 
-        // Function to scroll to and highlight a specific item in-place where it is in the workspace
         function highlightInPlace(elementId) {
             setTimeout(() => {
                 const el = document.getElementById(elementId) || document.getElementById(`card-${elementId}`);
@@ -632,7 +686,6 @@
             }
         }
 
-        // Close search dropdown when clicking outside
         document.addEventListener('click', (e) => {
             const searchContainer = document.getElementById('nav-search-input')?.parentElement;
             if (searchContainer && !searchContainer.contains(e.target)) {
@@ -1102,6 +1155,105 @@
         function removeTimetableSlot(id) {
             userTimetable = userTimetable.filter(s => s.id !== id);
             renderTimetable();
+        }
+
+        // ==========================================
+        // FREE AI ASSISTANT INTEGRATION LOGIC
+        // ==========================================
+        const OPENROUTER_API_KEY = "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";
+
+        const systemPrompt = {
+            role: "system",
+            content: "You are an expert AI Doubt Solver & Tutor specialized in GATE Electronics and Communication Engineering (ECE). Provide accurate, concise answers for engineering mathematics, signals & systems, networks, electronic devices (EDC), analog circuits, digital circuits, control systems, electromagnetics, and communications. Include formulas, numerical steps, and standard theoretical definitions where helpful."
+        };
+
+        let aiChatHistory = JSON.parse(localStorage.getItem('gate_ai_history')) || [systemPrompt];
+
+        function toggleAIChat() {
+            const win = document.getElementById('ai-chat-window');
+            if (win.classList.contains('hidden')) {
+                win.classList.remove('hidden');
+                document.getElementById('ai-input-field').focus();
+            } else {
+                win.classList.add('hidden');
+            }
+        }
+
+        function clearAIChat() {
+            aiChatHistory = [systemPrompt];
+            localStorage.removeItem('gate_ai_history');
+            const messagesContainer = document.getElementById('ai-chat-messages');
+            messagesContainer.innerHTML = `
+                <div class="bg-dark-900 border border-amber-500/20 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]">
+                    <span class="text-amber-400 font-bold block mb-1">⚡ GATE ECE Assistant:</span>
+                    Chat cleared. Ask me any GATE ECE doubt or question!
+                </div>
+            `;
+        }
+
+        async function sendAIMessage() {
+            const input = document.getElementById('ai-input-field');
+            const btn = document.getElementById('ai-send-btn');
+            const container = document.getElementById('ai-chat-messages');
+            const query = input.value.trim();
+
+            if (!query) return;
+
+            // Render user bubble
+            const userBubble = document.createElement('div');
+            userBubble.className = "bg-amber-500/20 border border-amber-500/40 p-3 rounded-2xl text-xs leading-relaxed max-w-[85%] ml-auto text-amber-200";
+            userBubble.innerHTML = `<span class="font-bold text-amber-400 block mb-0.5">You:</span>${query.replace(/</g, "&lt;").replace(/>/g, "&gt;")}`;
+            container.appendChild(userBubble);
+
+            input.value = '';
+            input.disabled = true;
+            btn.disabled = true;
+            container.scrollTop = container.scrollHeight;
+
+            // Push to history
+            aiChatHistory.push({ role: "user", content: query });
+
+            // Render thinking indicator
+            const botBubble = document.createElement('div');
+            botBubble.className = "bg-dark-900 border border-cyan-400/30 p-3 rounded-2xl text-xs leading-relaxed max-w-[90%]";
+            botBubble.innerHTML = `<span class="text-cyan-400 font-bold block mb-0.5">GATE AI:</span><span class="animate-pulse text-gray-400">Computing response...</span>`;
+            container.appendChild(botBubble);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": "https://content-ece.github.io/Gate-ece/",
+                        "X-Title": "GATE MATRIX ECE Workspace"
+                    },
+                    body: JSON.stringify({
+                        model: "meta-llama/llama-3-8b-instruct:free",
+                        messages: aiChatHistory
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.choices && data.choices[0]?.message?.content) {
+                    const aiReply = data.choices[0].message.content;
+                    botBubble.innerHTML = `<span class="text-cyan-400 font-bold block mb-1">GATE AI:</span><div class="whitespace-pre-wrap">${aiReply.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>`;
+                    aiChatHistory.push({ role: "assistant", content: aiReply });
+                    localStorage.setItem('gate_ai_history', JSON.stringify(aiChatHistory));
+                } else {
+                    botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Notice:</span>Please make sure you have added your valid free OpenRouter API key inside the script.`;
+                }
+            } catch (err) {
+                botBubble.innerHTML = `<span class="text-red-400 font-bold block mb-1">Error:</span>Unable to connect to AI server. Check your network connection.`;
+                console.error(err);
+            } finally {
+                input.disabled = false;
+                btn.disabled = false;
+                input.focus();
+                container.scrollTop = container.scrollHeight;
+            }
         }
 
         // Initialize on load
