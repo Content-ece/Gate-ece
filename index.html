@@ -149,6 +149,9 @@
                 <button onclick="switchPage('admission')" class="nav-btn hover:text-amber-400 transition-colors">Admission / Pass</button>
                 <button onclick="switchPage('research')" class="nav-btn hover:text-amber-400 transition-colors">Research &amp; PYQs</button>
                 <button onclick="switchPage('timetable')" class="nav-btn hover:text-amber-400 transition-colors">Timetable</button>
+                <button onclick="switchPage('aitutor')" class="nav-btn hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i> AI Tutor
+                </button>
             </nav>
 
             <!-- Right Section: Search, Theme Toggle & Status -->
@@ -188,6 +191,7 @@
             <button onclick="switchPage('admission'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Admission / Pass</button>
             <button onclick="switchPage('research'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Research &amp; PYQs</button>
             <button onclick="switchPage('timetable'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800">Timetable</button>
+            <button onclick="switchPage('aitutor'); toggleMobileMenu();" class="text-left px-3.5 py-2.5 rounded-lg hover:bg-dark-800 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i> AI Tutor</button>
         </div>
     </header>
 
@@ -213,6 +217,9 @@
                         </button>
                         <button onclick="switchPage('research')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-dark-800 border border-cyan-400/60 text-cyan-400 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-cyan-400/10 transition-all font-bold">
                             View Research &amp; PYQs Hub
+                        </button>
+                        <button onclick="switchPage('aitutor')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-xl bg-dark-800 border border-cyan-400/60 text-cyan-400 font-mono text-xs sm:text-sm uppercase tracking-wider hover:bg-cyan-400/10 transition-all font-bold flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> Ask the AI Tutor
                         </button>
                     </div>
                 </div>
@@ -380,6 +387,52 @@
             </div>
         </div>
 
+        <!-- PAGE 5: AI TUTOR (GEMINI-POWERED ECE / GATE DOUBT SOLVER) -->
+        <div id="page-aitutor" class="hidden space-y-8">
+            <div class="text-center max-w-2xl mx-auto mb-4">
+                <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400 mb-2 uppercase tracking-widest font-bold">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> AI-POWERED DOUBT SOLVER
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">ASK THE ECE / GATE AI TUTOR</h2>
+                <p class="text-xs sm:text-sm opacity-90">Ask any ECE or GATE problem — Signals, Networks, EDC, Digital, Communications, Control Systems, EM, or any GATE-related question. Get a full step-by-step explanation.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto glass-panel rounded-3xl border-cyan-400/40 shadow-2xl flex flex-col overflow-hidden" style="height: 65vh; min-height: 420px;">
+                <!-- Chat messages area -->
+                <div id="chat-messages" class="flex-grow overflow-y-auto p-4 sm:p-6 space-y-4 font-mono text-xs sm:text-sm">
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-cyan-400/20 border border-cyan-400/50 flex items-center justify-center shrink-0">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i>
+                        </div>
+                        <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] leading-relaxed text-gray-200">
+                            Hi! I'm your GATE ECE AI Tutor. Ask me any numerical, theory question, or previous-year GATE problem from any ECE subject, and I'll explain it step-by-step.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing indicator -->
+                <div id="chat-typing" class="hidden px-4 sm:px-6 pb-2 font-mono text-xs text-cyan-400 flex items-center gap-2">
+                    <i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> AI Tutor is thinking...
+                </div>
+
+                <!-- Input area -->
+                <div class="border-t border-gray-800 p-3 sm:p-4 bg-dark-900/60">
+                    <div class="flex gap-2 sm:gap-3 items-end">
+                        <textarea id="chat-input" rows="1" placeholder="Type your ECE/GATE question here..." onkeydown="handleChatKey(event)" class="flex-grow bg-dark-800 border border-cyan-400/30 rounded-xl px-4 py-3 text-xs sm:text-sm font-mono focus:outline-none focus:border-cyan-400 resize-none max-h-32"></textarea>
+                        <button onclick="sendChatMessage()" id="chat-send-btn" class="p-3 sm:p-3.5 rounded-xl bg-cyan-400 text-black hover:bg-cyan-500 transition-colors shrink-0 shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+                            <i data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <p class="text-[10px] sm:text-xs opacity-70">AI can make mistakes. Verify important answers.</p>
+                        <button onclick="clearChat()" class="text-[10px] sm:text-xs opacity-70 hover:text-red-400 hover:opacity-100 transition-colors flex items-center gap-1">
+                            <i data-lucide="trash-2" class="w-3 h-3"></i> Clear Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- PAGE 5: TIMETABLE (CUSTOM TIMETABLE BUILDER) -->
         <div id="page-timetable" class="hidden space-y-10">
             <div class="text-center max-w-2xl mx-auto mb-8">
@@ -458,7 +511,7 @@
 
         // Modular Page Switching
         function switchPage(pageId) {
-            const pages = ['home', 'academics', 'admission', 'research', 'timetable'];
+            const pages = ['home', 'academics', 'admission', 'research', 'timetable', 'aitutor'];
             pages.forEach(p => {
                 const el = document.getElementById(`page-${p}`);
                 if (el) {
@@ -1102,6 +1155,128 @@
         function removeTimetableSlot(id) {
             userTimetable = userTimetable.filter(s => s.id !== id);
             renderTimetable();
+        }
+
+        // ================= AI TUTOR (GEMINI API) =================
+        const GEMINI_API_KEY = "AQ.Ab8RN6JE0skB3_4t730Gyhda3N6nP_Y6ZPZKG4tStRDfQkqzXA";
+        const GEMINI_MODEL = "gemini-flash-latest";
+        const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+
+        const GATE_TUTOR_SYSTEM_PROMPT = `You are an expert GATE ECE (Electronics and Communication Engineering) tutor. 
+You help students solve any ECE or GATE-related problem: Signals & Systems, Networks, Electronic Devices & Circuits, Analog & Digital Circuits, Control Systems, Communications, Electromagnetics, Microprocessors, and Engineering Mathematics.
+Always explain step-by-step, show formulas used, show intermediate working for numericals, and give the final answer clearly. If a question is about GATE exam pattern, marking scheme, syllabus, or preparation strategy, answer that too using accurate general knowledge. Keep explanations clear and exam-focused. Use plain text formatting (no markdown tables), and use simple math notation.`;
+
+        let chatHistory = []; // {role: 'user'|'model', text: string}
+
+        function autoGrowTextarea() {
+            const el = document.getElementById('chat-input');
+            if (!el) return;
+            el.style.height = 'auto';
+            el.style.height = Math.min(el.scrollHeight, 128) + 'px';
+        }
+
+        function handleChatKey(event) {
+            autoGrowTextarea();
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
+        }
+
+        function appendChatBubble(role, text) {
+            const container = document.getElementById('chat-messages');
+            if (!container) return;
+            const isUser = role === 'user';
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+            wrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-full ${isUser ? 'bg-amber-500/20 border-amber-500/50' : 'bg-cyan-400/20 border-cyan-400/50'} border flex items-center justify-center shrink-0">
+                    <i data-lucide="${isUser ? 'user' : 'sparkles'}" class="w-4 h-4 ${isUser ? 'text-amber-400' : 'text-cyan-400'}"></i>
+                </div>
+                <div class="${isUser ? 'bg-amber-500/15 border border-amber-500/30 rounded-tr-sm' : 'bg-dark-800 rounded-tl-sm'} rounded-2xl px-4 py-3 max-w-[85%] leading-relaxed text-gray-200 whitespace-pre-wrap">${escapeHtml(text)}</div>
+            `;
+            container.appendChild(wrapper);
+            lucide.createIcons();
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('chat-send-btn');
+            const typingEl = document.getElementById('chat-typing');
+            const text = input.value.trim();
+            if (!text) return;
+
+            appendChatBubble('user', text);
+            chatHistory.push({ role: 'user', text: text });
+            input.value = '';
+            autoGrowTextarea();
+            input.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.classList.add('opacity-50');
+            typingEl.classList.remove('hidden');
+
+            try {
+                const contents = chatHistory.map(m => ({
+                    role: m.role === 'user' ? 'user' : 'model',
+                    parts: [{ text: m.text }]
+                }));
+
+                const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: contents,
+                        systemInstruction: { parts: [{ text: GATE_TUTOR_SYSTEM_PROMPT }] },
+                        generationConfig: { temperature: 0.4 }
+                    })
+                });
+
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData?.error?.message || `Request failed (${response.status})`);
+                }
+
+                const data = await response.json();
+                const replyText = data?.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') 
+                    || "Sorry, I couldn't generate a response. Please try rephrasing your question.";
+
+                appendChatBubble('model', replyText);
+                chatHistory.push({ role: 'model', text: replyText });
+
+            } catch (err) {
+                appendChatBubble('model', `⚠️ Error: ${err.message}. Please check your connection and try again.`);
+            } finally {
+                typingEl.classList.add('hidden');
+                input.disabled = false;
+                sendBtn.disabled = false;
+                sendBtn.classList.remove('opacity-50');
+                input.focus();
+            }
+        }
+
+        function clearChat() {
+            chatHistory = [];
+            const container = document.getElementById('chat-messages');
+            if (container) {
+                container.innerHTML = `
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-cyan-400/20 border border-cyan-400/50 flex items-center justify-center shrink-0">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-cyan-400"></i>
+                        </div>
+                        <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[85%] leading-relaxed text-gray-200">
+                            Hi! I'm your GATE ECE AI Tutor. Ask me any numerical, theory question, or previous-year GATE problem from any ECE subject, and I'll explain it step-by-step.
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }
         }
 
         // Initialize on load
