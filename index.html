@@ -391,7 +391,7 @@
         <div id="page-aitutor" class="hidden space-y-8">
             <div class="text-center max-w-2xl mx-auto mb-4">
                 <div class="inline-flex items-center gap-2 text-xs sm:text-sm font-mono text-cyan-400 mb-2 uppercase tracking-widest font-bold">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i> AI-POWERED DOUBT SOLVER
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> AI-POWERED DOUBT SOLVER (GEMINI 3.6 FLASH)
                 </div>
                 <h2 class="text-2xl sm:text-4xl font-extrabold font-mono mb-3">ASK THE ECE / GATE AI TUTOR</h2>
                 <p class="text-xs sm:text-sm opacity-90">Ask any ECE or GATE problem — Signals, Networks, EDC, Digital, Communications, Control Systems, EM, or any GATE-related question. Get a full step-by-step explanation.</p>
@@ -1158,10 +1158,8 @@
         }
 
         // ================= AI TUTOR (GEMINI API) =================
-        const GEMINI_API_KEY = "AQ.Ab8RN6JE0skB3_4t730Gyhda3N6nP_Y6ZPZKG4tStRDfQkqzXA";
+        const GEMINI_API_KEY = "AQ.Ab8RN6LG4S3ZT2IWH4P5j7pgwkBLvumguvGDhyD8sA18ZsHlDQ";
         const GEMINI_MODEL = "gemini-3.6-flash";
-        const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
-
         const GATE_TUTOR_SYSTEM_PROMPT = `You are an expert GATE ECE (Electronics and Communication Engineering) tutor. 
 You help students solve any ECE or GATE-related problem: Signals & Systems, Networks, Electronic Devices & Circuits, Analog & Digital Circuits, Control Systems, Communications, Electromagnetics, Microprocessors, and Engineering Mathematics.
 Always explain step-by-step, show formulas used, show intermediate working for numericals, and give the final answer clearly. If a question is about GATE exam pattern, marking scheme, syllabus, or preparation strategy, answer that too using accurate general knowledge. Keep explanations clear and exam-focused. Use plain text formatting (no markdown tables), and use simple math notation.`;
@@ -1228,19 +1226,47 @@ Always explain step-by-step, show formulas used, show intermediate working for n
                     parts: [{ text: m.text }]
                 }));
 
-                const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: contents,
-                        systemInstruction: { parts: [{ text: GATE_TUTOR_SYSTEM_PROMPT }] },
-                        generationConfig: { temperature: 0.4 }
-                    })
-                });
+                const bodyPayload = {
+                    contents: contents,
+                    systemInstruction: { parts: [{ text: GATE_TUTOR_SYSTEM_PROMPT }] },
+                    generationConfig: { temperature: 0.4 }
+                };
+
+                let response;
+
+                // If token starts with AQ. or ya29., pass as Bearer authorization header
+                if (GEMINI_API_KEY.startsWith('AQ.') || GEMINI_API_KEY.startsWith('ya29.')) {
+                    response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${GEMINI_API_KEY}`
+                        },
+                        body: JSON.stringify(bodyPayload)
+                    });
+                }
+
+                // If no response yet or previous method failed, try standard query key & header
+                if (!response || !response.ok) {
+                    const queryUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+                    const res2 = await fetch(queryUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-goog-api-key': GEMINI_API_KEY
+                        },
+                        body: JSON.stringify(bodyPayload)
+                    });
+
+                    if (res2.ok || !response) {
+                        response = res2;
+                    }
+                }
 
                 if (!response.ok) {
                     const errData = await response.json().catch(() => ({}));
-                    throw new Error(errData?.error?.message || `Request failed (${response.status})`);
+                    const errMsg = errData?.error?.message || `Request failed (${response.status})`;
+                    throw new Error(errMsg);
                 }
 
                 const data = await response.json();
